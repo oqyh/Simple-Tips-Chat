@@ -1,5 +1,5 @@
 # [ANY] Simple Tips Chat (1.0.0)
-https://forums.alliedmods.net/showthread.php?p=2786018
+https://forums.alliedmods.net/showthread.php?p=2786726
 
 ### Print To Clients Tips Messages In Chat, Ip, Steamgroup,  Discord
 
