@@ -30,7 +30,7 @@ public Plugin myinfo =
 	name = "Simple Tips Chat",
 	author = "Gold_KingZ",
 	description = "Print In Chat Tips, Ip, Steamgroup,  Discord",
-	version = "1.0.0",
+	version = "1.0.1",
 	url = "https://github.com/oqyh"
 }
 
@@ -81,8 +81,17 @@ public void OnConfigsExecuted()
 	RegCCmdz(zbuffs5, Website, "Commands To Print Website");
 }
 
-public Action WelcomeJoinAnnouncer(Handle timer, any client)
+
+public Action T_Wel(Handle timer, any client)
 {
+	WelcomeJoinAnnouncer(client);
+	return Plugin_Handled;
+}
+
+public Action WelcomeJoinAnnouncer(client)
+{
+	if (IsClientConnected(client) && IsClientInGame(client))
+	{
 	switch(GetConVarInt(g_wlines))
 	{
 		case 0:
@@ -150,16 +159,20 @@ public Action WelcomeJoinAnnouncer(Handle timer, any client)
 			CPrintToChat(client, "%t", "Welcome8", client);
 		}
 	}
+	}
 	return Plugin_Continue;
 }
 
 public OnClientPutInServer(client)
 {
 	DisableTips[client] = false;
-	
+}
+
+public OnClientPostAdminCheck(client)
+{
 	if (GetConVarBool(g_Cvar_WpEnabled))
 	{
-		CreateTimer(GetConVarFloat(g_timewelcome), WelcomeJoinAnnouncer, any:client);
+		CreateTimer (GetConVarFloat(g_timewelcome), T_Wel, client);
 	}
 }
 
