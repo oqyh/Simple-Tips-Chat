@@ -10,7 +10,7 @@ https://forums.alliedmods.net/showthread.php?p=2786726
 ```
 1- Modify addons\sourcemod\translations\Simple_Tips_Chat.phrases.txt
 => Add Welcome1\Welcome2\Welcome3 <--- then take Welcome(3) Number 3 to Simple_Tips_Chat.cfg -> sm_tips_welcome_lines "3" <-- 3 Welcome Messages
-=> Add Tip1\Tip2\Tip3\Tip4 <--- then take Tip(4) Number 4 to Simple_Tips_Chat.cfg -> sm_tips_lines "4" <-- 3 Welcome Messages
+=> Add Tip1\Tip2\Tip3\Tip4 <--- then take Tip(4) Number 4 to Simple_Tips_Chat.cfg -> sm_tips_lines "4" <-- 4 Tips Messages
 
 2- Modify cfg\sourcemod\Simple_Tips_Chat.cfg 
 => Welcome messages <--- sm_tips_welcome_time "X" Time in seconds
