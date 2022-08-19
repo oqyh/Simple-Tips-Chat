@@ -1,4 +1,4 @@
-# [ANY] Simple Tips Chat (1.0.0)
+# [ANY] Simple Tips Chat (1.0.1)
 https://forums.alliedmods.net/showthread.php?p=2786726
 
 ### Print To Clients Tips Messages In Chat, Ip, Steamgroup,  Discord
@@ -79,6 +79,9 @@ sm_tips_cmd_web "sm_website;sm_web;sm_site"
 
 ## .:[ Change Log ]:.
 ```
+(1.0.1)
+- Fix Client x is not in game
+
 (1.0.0)
 - Initial Release
 ```
