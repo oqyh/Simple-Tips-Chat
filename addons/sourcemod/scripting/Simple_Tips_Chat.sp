@@ -2,16 +2,7 @@
 #include <multicolors>
 #pragma semicolon 1
 
-#define MAX_C_L 128
-
-static ArrayList gCommands;
-
 ConVar g_etips;
-ConVar g_cmdtips;
-ConVar g_cmddis;
-ConVar g_cmdip;
-ConVar g_cmdweb;
-ConVar g_cmdsteam;
 ConVar g_eipprint;
 ConVar g_ediscord;
 ConVar g_egroup;
@@ -30,7 +21,7 @@ public Plugin myinfo =
 	name = "Simple Tips Chat",
 	author = "Gold_KingZ",
 	description = "Print In Chat Tips, Ip, Steamgroup,  Discord",
-	version = "1.0.1",
+	version = "1.0.2",
 	url = "https://github.com/oqyh"
 }
 
@@ -51,36 +42,27 @@ public OnPluginStart()
 	g_egroup	=	CreateConVar( "sm_tips_enable_steamgroup",	"1",	"Enable Command steamgroup print chat || 1= Yes || 0= No", _, true, 0.0, true, 1.0);
 	g_ewebsite	=	CreateConVar( "sm_tips_enable_website",	"1",	"Enable Command website print chat || 1= Yes || 0= No", _, true, 0.0, true, 1.0);
 	
-	g_cmdtips =	CreateConVar( "sm_tips_cmd_tips",	"sm_tips;sm_tip",	"Commands To Disable / Enable Tips");
-	g_cmdip =	CreateConVar( "sm_tips_cmd_ip",	"sm_ip;sm_serverip",	"Commands To Print Ip");
-	g_cmddis =	CreateConVar( "sm_tips_cmd_dis",	"sm_discord",	"Commands To Print Discord");
-	g_cmdsteam =	CreateConVar( "sm_tips_cmd_steam",	"sm_steamgroup;sm_steam;sm_group",	"Commands To Print Steam Group");
-	g_cmdweb =	CreateConVar( "sm_tips_cmd_web",	"sm_website;sm_web;sm_site",	"Commands To Print Website");
+	RegConsoleCmd("sm_tips", Command_Tips);
+	RegConsoleCmd("sm_tip", Command_Tips);
+	RegConsoleCmd("sm_hints", Command_Tips);
+	
+	RegConsoleCmd("sm_serverip", Ip_Print);
+	RegConsoleCmd("sm_ip", Ip_Print);
+	
+	RegConsoleCmd("sm_discord", Discord);
+	
+	RegConsoleCmd("sm_steamgroup", steamgroup);
+	RegConsoleCmd("sm_steam", steamgroup);
+	RegConsoleCmd("sm_group", steamgroup);
+	
+	RegConsoleCmd("sm_website", Website);
+	RegConsoleCmd("sm_web", Website);
+	RegConsoleCmd("sm_site", Website);
 	
 	AutoExecConfig(true, "Simple_Tips_Chat");
 	
 	CreateTimer(1.0, Timer_Tip);
 }
-
-public void OnConfigsExecuted()
-{
-	char zbuffs1[1024];
-	char zbuffs2[1024];
-	char zbuffs3[1024];
-	char zbuffs4[1024];
-	char zbuffs5[1024];
-	g_cmdtips.GetString(zbuffs1, sizeof(zbuffs1));
-	g_cmdip.GetString(zbuffs2, sizeof(zbuffs2));
-	g_cmddis.GetString(zbuffs3, sizeof(zbuffs3));
-	g_cmdsteam.GetString(zbuffs4, sizeof(zbuffs4));
-	g_cmdweb.GetString(zbuffs5, sizeof(zbuffs5));
-	RegCCmdz(zbuffs1, Command_Tips, "Commands To Disable / Enable Tips");
-	RegCCmdz(zbuffs2, Ip_Print, "Commands To Print Ip");
-	RegCCmdz(zbuffs3, Discord, "Commands To Print Discord");
-	RegCCmdz(zbuffs4, steamgroup, "Commands To Print Steam Group");
-	RegCCmdz(zbuffs5, Website, "Commands To Print Website");
-}
-
 
 public Action T_Wel(Handle timer, any client)
 {
@@ -212,7 +194,7 @@ public Action steamgroup(int client,int args)
 	return Plugin_Continue;
 }
 
-public Action Timer_Tip(Handle event, Handle timer)
+public Action Timer_Tip(Handle timer)
 {
 	if (GetConVarBool(g_etips))
 	{
@@ -230,72 +212,20 @@ public Action Timer_Tip(Handle event, Handle timer)
 	return Plugin_Continue;
 }
 
-public Action Command_Tips(client, args)
+public Action Command_Tips(int client, int args)
 {
 	if (GetConVarBool(g_etips))
 	{
 		DisableTips[client] = !DisableTips[client];
-		if(DisableTips[client] == true)
+		if(DisableTips[client])
 		{
 			CPrintToChat(client, " %t %t", "Chat_Prefix", "Disable");
-		}else
-		if(DisableTips[client] == false)
+		}
+		else
 		{
 			CPrintToChat(client, " %t %t", "Chat_Prefix", "Enable");
 		}
+		return Plugin_Handled;
 	}
 	return Plugin_Continue;
-}
-
-stock void RegCCmdz(const char[] commands, ConCmd callback, const char[] description = "", int flags = 0)
-{
-	if(!gCommands)
-		gCommands = new ArrayList(ByteCountToCells(MAX_C_L));
-	
-	ArrayList arr = new ArrayList(ByteCountToCells(MAX_C_L));
-	
-	char buff[MAX_C_L];
-	int start_pos, len;
-	bool shouldskip;
-	for(int i = 0; commands[i] != '\0'; start_pos = i++)
-	{
-		buff[0] = '\0';
-		
-		do
-		{
-			if((!IsCharAlpha(commands[i]) && !IsCharNumeric(commands[i]) && commands[i] != '_') || i - start_pos + 1 >= MAX_C_L)
-			{
-				len = FindCharInString(commands[i], ';');
-				if(len == -1)
-					i = start_pos + strlen(commands[start_pos]);
-				else
-					i += len;
-				
-				len = i++ - start_pos + 1;
-				char[] tempbuff = new char[len + 1];
-				strcopy(tempbuff, len, commands[start_pos]);
-				LogError("Failed To Find command \"%s\".", tempbuff);
-				
-				shouldskip = true;
-				break;
-			}
-		}
-		while(commands[++i] != ';' && commands[i] != '\0');
-		
-		if(shouldskip)
-			continue;
-		
-		len = i++ - start_pos + 1;
-		strcopy(buff, (len > MAX_C_L ? MAX_C_L : len), commands[start_pos]);
-		
-		if(gCommands.FindString(buff) == -1)
-			RegConsoleCmd(buff, callback, description, flags);
-		
-		arr.PushString(buff);
-	}
-	
-	delete gCommands;
-	gCommands = arr.Clone();
-	
-	delete arr;
 }
