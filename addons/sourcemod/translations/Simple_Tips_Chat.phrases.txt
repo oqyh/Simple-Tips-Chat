@@ -20,6 +20,28 @@
 		"ru"			"Был {darkred}Неполноценный"
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	"Website"
+	{
+		"en"		"Our Website Is : {lime}google.com"
+		"ru"			"Наш сайт : {lime}google.com"
+	}
+	"Ip_Server"
+	{
+		"en"		"Server Ip Is : {lime}3.109.194.128:27015"
+		"ru"			"IP-адрес сервера : {lime}3.109.194.128:27015"
+	}
+	"Discord"
+	{
+		"en"		"Our Discord Is : {lime}https://discord.io/Gold_KingZ"
+		"ru"			"Наш раздор : {lime}https://discord.io/Gold_KingZ"
+	}
+	"SteamGroup"
+	{
+		"en"		"Our Steam Group Is : {lime}https://steamcommunity.com/groups/Gold_KingZ"
+		"ru"			"Наша группа в Steam : {lime}https://steamcommunity.com/groups/Gold_KingZ"
+	}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Add Welcome Here Welcome1/Welcome2/Welcome3 etc... and remember last Welcome number and add it sm_tips_welcome_lines//
 	"Welcome1"
 	{
 		"en"		" {darkred}================================="
@@ -52,27 +74,6 @@
 	"Welcome8"
 	{
 		"en"		" {darkred}================================="
-	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	"Website"
-	{
-		"en"		"Our Website Is : {lime}google.com"
-		"ru"			"Наш сайт : {lime}google.com"
-	}
-	"Ip_Server"
-	{
-		"en"		"Server Ip Is : {lime}3.109.194.128:27015"
-		"ru"			"IP-адрес сервера : {lime}3.109.194.128:27015"
-	}
-	"Discord"
-	{
-		"en"		"Our Discord Is : {lime}https://discord.io/Gold_KingZ"
-		"ru"			"Наш раздор : {lime}https://discord.io/Gold_KingZ"
-	}
-	"SteamGroup"
-	{
-		"en"		"Our Steam Group Is : {lime}https://steamcommunity.com/groups/Gold_KingZ"
-		"ru"			"Наша группа в Steam : {lime}https://steamcommunity.com/groups/Gold_KingZ"
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Add Tips Here Tip1/Tip2/Tip3 etc... and remember last tip number and add it sm_tips_lines//
