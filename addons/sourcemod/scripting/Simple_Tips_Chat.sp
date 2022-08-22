@@ -1,8 +1,11 @@
 #include <sourcemod>
+#include <clientprefs>
 #include <multicolors>
+
 #pragma semicolon 1
 
 ConVar g_etips;
+ConVar g_ecookie;
 ConVar g_eipprint;
 ConVar g_ediscord;
 ConVar g_egroup;
@@ -14,6 +17,7 @@ bool DisableTips[MAXPLAYERS+1];
 Handle g_Cvar_WpEnabled = INVALID_HANDLE;
 Handle g_tlines = INVALID_HANDLE;
 Handle g_wlines = INVALID_HANDLE;
+Handle g_TipsCookie;
 char sPhrase[64];
 
 public Plugin myinfo = 
@@ -21,7 +25,7 @@ public Plugin myinfo =
 	name = "Simple Tips Chat",
 	author = "Gold_KingZ",
 	description = "Print In Chat Tips, Ip, Steamgroup,  Discord",
-	version = "1.0.2",
+	version = "1.0.3",
 	url = "https://github.com/oqyh"
 }
 
@@ -30,6 +34,7 @@ public OnPluginStart()
 	LoadTranslations( "Simple_Tips_Chat.phrases" );
 	
 	g_etips =	CreateConVar( "sm_tips_enable",	"1",	"Enable Tips Messages || 1= Yes || 0= No", _, true, 0.0, true, 1.0);
+	g_ecookie =	CreateConVar( "sm_tips_cookie",	"1",	"Save Enable Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enable)", _, true, 0.0, true, 1.0);
 	g_tlines	=	CreateConVar( "sm_tips_lines",	"6",	"How many Tips Messages did you use in Simple_Tips_Chat.phrases");
 	g_timetip	=	CreateConVar( "sm_tips_time",	"101.0",	"Time in seconds between Tips Messages");
 	
@@ -59,9 +64,18 @@ public OnPluginStart()
 	RegConsoleCmd("sm_web", Website);
 	RegConsoleCmd("sm_site", Website);
 	
+	g_TipsCookie = RegClientCookie("Simple_Tips_Chat_Enable", "Simple Tips Chat Enable", CookieAccess_Protected);
+	
 	AutoExecConfig(true, "Simple_Tips_Chat");
 	
 	CreateTimer(1.0, Timer_Tip);
+}
+
+public void OnClientCookiesCached(int client)
+{
+		char sCookie[8];
+		GetClientCookie(client,g_TipsCookie, sCookie, sizeof(sCookie));
+		DisableTips[client] = view_as<bool>(StringToInt(sCookie));
 }
 
 public Action T_Wel(Handle timer, any client)
@@ -147,7 +161,10 @@ public Action WelcomeJoinAnnouncer(client)
 
 public OnClientPutInServer(client)
 {
-	DisableTips[client] = false;
+	if (!GetConVarBool(g_ecookie))
+	{
+		DisableTips[client] = false;
+	}
 }
 
 public OnClientPostAdminCheck(client)
@@ -217,6 +234,11 @@ public Action Command_Tips(int client, int args)
 	if (GetConVarBool(g_etips))
 	{
 		DisableTips[client] = !DisableTips[client];
+		
+		char sCookie[8];
+		IntToString(DisableTips[client], sCookie, sizeof(sCookie));
+		SetClientCookie(client, g_TipsCookie, sCookie);
+		
 		if(DisableTips[client])
 		{
 			CPrintToChat(client, " %t %t", "Chat_Prefix", "Disable");
