@@ -1,4 +1,4 @@
-# [ANY] Simple Tips Chat (1.0.2)
+# [ANY] Simple Tips Chat (1.0.3)
 https://forums.alliedmods.net/showthread.php?p=2786726
 
 ### Print To Clients Tips Messages In Chat, Ip, Steamgroup,  Discord
@@ -22,6 +22,9 @@ https://forums.alliedmods.net/showthread.php?p=2786726
 ```
 // Enable Tips Messages || 1= Yes || 0= No
 sm_tips_enable "1"
+
+// Save Enable Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enable)
+sm_tips_cookie "1"
 
 // How many Tips Messages did you use in Simple_Tips_Chat.phrases
 sm_tips_lines "6"
@@ -58,6 +61,9 @@ sm_tips_enable_website "1"
 
 ## .:[ Change Log ]:.
 ```
+(1.0.3)
+- Added Cvar sm_tips_cookie "1" Save Enable Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enable)
+
 (1.0.2)
 - Fix toggle problem
 
