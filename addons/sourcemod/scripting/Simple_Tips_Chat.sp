@@ -14,11 +14,15 @@ ConVar g_timewelcome;
 ConVar g_ewebsite;
 
 bool DisableTips[MAXPLAYERS+1];
+
 Handle g_Cvar_WpEnabled = INVALID_HANDLE;
 Handle g_tlines = INVALID_HANDLE;
 Handle g_wlines = INVALID_HANDLE;
 Handle g_TipsCookie;
+
 char sPhrase[64];
+char g_sServerip[32];
+char g_sHostport[16];
 
 public Plugin myinfo = 
 {
@@ -50,6 +54,7 @@ public OnPluginStart()
 	RegConsoleCmd("sm_tips", Command_Tips);
 	RegConsoleCmd("sm_tip", Command_Tips);
 	RegConsoleCmd("sm_hints", Command_Tips);
+	RegConsoleCmd("sm_hint", Command_Tips);
 	
 	RegConsoleCmd("sm_serverip", Ip_Print);
 	RegConsoleCmd("sm_ip", Ip_Print);
@@ -69,6 +74,9 @@ public OnPluginStart()
 	AutoExecConfig(true, "Simple_Tips_Chat");
 	
 	CreateTimer(1.0, Timer_Tip);
+	
+	FindConVar("ip").GetString(g_sServerip, sizeof(g_sServerip));
+	FindConVar("hostport").GetString(g_sHostport, sizeof(g_sHostport));
 }
 
 public void OnClientCookiesCached(int client)
@@ -169,7 +177,7 @@ public OnClientPutInServer(client)
 
 public OnClientPostAdminCheck(client)
 {
-	if (GetConVarBool(g_Cvar_WpEnabled))
+	if (GetConVarBool(g_Cvar_WpEnabled)) 
 	{
 		CreateTimer (GetConVarFloat(g_timewelcome), T_Wel, client);
 	}
@@ -188,7 +196,13 @@ public Action Ip_Print(int client,int args)
 {
 	if (!GetConVarBool(g_eipprint)) return Plugin_Continue;
 	
-	CPrintToChat(client, " %t %t", "Chat_Prefix", "Ip_Server");
+	char ip[32];
+	char port[16];
+	
+	Format(ip, sizeof(ip), "%s", g_sServerip);
+	Format(port, sizeof(port), "%s", g_sHostport);
+	
+	CPrintToChat(client, " %t %s:%s", "Chat_Prefix", ip, port);
 	
 	return Plugin_Continue;
 }
