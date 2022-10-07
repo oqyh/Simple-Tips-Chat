@@ -1,4 +1,4 @@
-# [ANY] Simple Tips Chat (1.0.3)
+# [ANY] Simple Tips Chat (1.0.4)
 https://forums.alliedmods.net/showthread.php?p=2786726
 
 ### Print To Clients Tips Messages In Chat, Ip, Steamgroup,  Discord
@@ -20,47 +20,51 @@ https://forums.alliedmods.net/showthread.php?p=2786726
 
 ## .:[ ConVars ]:.
 ```
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Enable Tips Messages || 1= Yes || 0= No
 sm_tips_enable "1"
+// Enable Prefix Tips Tag || 1= Yes || 0= No
+sm_prefix_enable "1"
 
-// Save Enable Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enable)
+// How many Tips Messages Did You Use In Simple_Tips_Chat.phrases
+sm_tips_lines "7"
+// Do You Want Spaces Between Tips And Chat  || 1= Yes || 0= No
+sm_tips_spaces "1"
+// Save Enable/Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enabled)
 sm_tips_cookie "1"
-
-// How many Tips Messages did you use in Simple_Tips_Chat.phrases
-sm_tips_lines "6"
-
-// Time in seconds between Tips Messages
-// Default: "101.0"
+// Time In Seconds Between Tips Messages
 sm_tips_time "101.0"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Enable Welcome Message || 1= Yes || 0= No
 sm_tips_enable_welcome "1"
 
-// How many Welcome Messages did you use in Simple_Tips_Chat.phrases Max is 8 Lines
+// How Many Welcome Messages Did You Use In Simple_Tips_Chat.phrases Max is 8 Lines
 sm_tips_welcome_lines "7"
-
-// Time in seconds To Send Welcome messages
-// Default: "15.0"
+// Time In Seconds To Send Welcome Messages
 sm_tips_welcome_time "15.0"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Enable Command discord print chat || 1= Yes || 0= No
+// Enable Command Discord Print Chat || 1= Yes || 0= No
 sm_tips_enable_discord "1"
 
-// Enable Command ip print chat || 1= Yes || 0= No
+// Enable Command Ip Print Chat || 1= Yes || 0= No
 sm_tips_enable_ip "1"
 
-// Enable Command steamgroup print chat || 1= Yes || 0= No
+// Enable Command Steamgroup Print Chat || 1= Yes || 0= No
 sm_tips_enable_steamgroup "1"
 
-// Enable Command website print chat || 1= Yes || 0= No
+// Enable Command Website Print Chat || 1= Yes || 0= No
 sm_tips_enable_website "1"
 ```
 
 
 ## .:[ Change Log ]:.
 ```
+(1.0.4)
+- Added Cvar sm_prefix_enable "1" Enable Prefix Tips Tag
+- Added Cvar sm_tips_spaces "1" Spaces Between Tips And Chat
+
 (1.0.3)
 - Added Cvar sm_tips_cookie "1" Save Enable Disable Client Cookie || 1= Yes || 0= No (Next Map Or Reconnect Client Tips Will Be By Default Enable)
 
